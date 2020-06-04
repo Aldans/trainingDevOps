@@ -1,0 +1,3 @@
+[vb]
+dev    ansible_host=172.26.17.115 ansible_user=vagrant  ansible_ssh_private_key_file=/vagrant/.vagrant/machines/dev/virtualbox/private_key
+prod   ansible_host=172.26.17.116 ansible_user=vagrant  ansible_ssh_private_key_file=/vagrant/.vagrant/machines/prod/virtualbox/private_key
