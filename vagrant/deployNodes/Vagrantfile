@@ -1,0 +1,33 @@
+nodes = [
+  { :hostname => 'stage', :ip => '192.168.1.112', :memory => 1024, :cpu => 2, :boxname => "ubuntu/xenial64" },
+  { :hostname => 'prod', :ip => '192.168.1.113', :memory => 1024, :cpu => 2, :boxname => "ubuntu/xenial64" },
+	{ :hostname => 'master', :ip => '192.168.1.111', :memory => 1024, :cpu => 2, :boxname => "ubuntu/xenial64" },
+]
+
+Vagrant.configure("2") do |config|
+  nodes.each do |node|
+    config.vm.box_check_update = false
+      config.vm.define node[:hostname] do |nodeconfig|
+        nodeconfig.vm.box = node[:boxname]
+        nodeconfig.vm.hostname = node[:hostname]
+        nodeconfig.vm.network :public_network, ip: node[:ip]
+        nodeconfig.vm.provider :virtualbox do |vb|
+          vb.name = node[:hostname]
+          vb.memory = node[:memory]
+          vb.cpus = node[:cpu]
+        end
+        config.vm.provision "shell", inline: <<-SHELL
+          sudo apt-add-repository ppa:ansible/ansible
+          sudo apt update
+          sudo apt install ansible -y
+        SHELL
+      end
+  end
+  config.vm.define "master" do |master|
+    master.vm.provision "file", source: "H:/wrk/trainDevOps/ansible/installList", destination: "~/ansible"
+    master.vm.provision :shell, inline: <<-SHELL
+      cd /home/vagrant/ansible/
+      sudo ansible-playbook playb.yml
+    SHELL
+  end
+end

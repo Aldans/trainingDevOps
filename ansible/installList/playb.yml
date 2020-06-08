@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: test connection
+      ping:
+
+    - name: install python3
+      package:
+        name:
+          - python3
+          - vifm
+        state: latest

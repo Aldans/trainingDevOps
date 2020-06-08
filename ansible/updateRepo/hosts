@@ -1,3 +1,0 @@
-[vbx_hosts]
-dev ansible_host=172.26.15.115
-prod ansible_host=172.26.15.140
