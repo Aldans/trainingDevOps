@@ -5,7 +5,10 @@ Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt update
-    sudo apt install ansible -y
+    sudo apt install python-pip -y
+    sudo pip install --upgrade pip
+    pip install -r installList.txt
+    # sudo apt install ansible -y
   SHELL
 
   # vm1
