@@ -7,6 +7,7 @@ nodes = [
 Vagrant.configure("2") do |config|
   nodes.each do |node|
     config.vm.box_check_update = false
+    # config.ssh.insert_key = false
       config.vm.define node[:hostname] do |nodeconfig|
         nodeconfig.vm.box = node[:boxname]
         nodeconfig.vm.hostname = node[:hostname]
@@ -17,17 +18,25 @@ Vagrant.configure("2") do |config|
           vb.cpus = node[:cpu]
         end
         config.vm.provision "shell", inline: <<-SHELL
-          sudo apt-add-repository ppa:ansible/ansible
+          # sudo apt-add-repository ppa:ansible/ansible
           sudo apt update
-          sudo apt install ansible -y
+          sudo apt install python -y
+          # sudo apt install ansible -y
         SHELL
       end
   end
   config.vm.define "master" do |master|
     master.vm.provision "file", source: "H:/wrk/trainDevOps/ansible/installList", destination: "~/ansible"
     master.vm.provision :shell, inline: <<-SHELL
-      cd /home/vagrant/ansible/
-      sudo ansible-playbook playb.yml
+      sudo apt-add-repository ppa:ansible/ansible
+      sudo apt update
+      sudo apt install ansible -y
+      cp /vagrant/.vagrant/machines/stage/virtualbox/private_key /home/vagrant/.ssh/stage_key
+      cp /vagrant/.vagrant/machines/prod/virtualbox/private_key /home/vagrant/.ssh/prod_key
+      chmod 644 /home/vagrant/.ssh/stage_key
+      chmod 644 /home/vagrant/.ssh/prod_key
+      # cd /home/vagrant/ansible/
+      # sudo ansible-playbook playb.yml
     SHELL
   end
 end

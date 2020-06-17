@@ -1,3 +1,3 @@
 [vb]
-stage  ansible_host=192.168.1.112 ansible_user=vagrant  ansible_ssh_private_key_file=/vagrant/.vagrant/machines/stage/virtualbox/private_key
-prod   ansible_host=192.168.1.113 ansible_user=vagrant  ansible_ssh_private_key_file=/vagrant/.vagrant/machines/prod/virtualbox/private_key
+stage  ansible_host=192.168.1.112 ansible_user=vagrant  ansible_ssh_private_key_file=/home/vagrant/.ssh/stage_key
+prod   ansible_host=192.168.1.113 ansible_user=vagrant  ansible_ssh_private_key_file=/home/vagrant/.ssh/prod_key
